@@ -93,7 +93,7 @@ Current version: 2.4.1
 
 ## License
 
-This project is licensed under the APACHE License. See the LICENSE file for details.
+This project is licensed under the [APACHE License](https://github.com/Flyns157/debug_sys/blob/main/LICENSE). See the [LICENSE file](https://github.com/Flyns157/debug_sys/blob/main/LICENSE) for details.
 
 ---
 

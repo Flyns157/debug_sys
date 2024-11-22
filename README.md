@@ -1,6 +1,6 @@
 # DEBUGSYS
 
-A custom implementation of a debugging system for a web application.
+A custom implementation of a debugging system.
 
 ## Table of Contents
 

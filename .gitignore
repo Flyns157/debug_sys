@@ -162,4 +162,3 @@ cython_debug/
 app.egg-info
 *.pyc
 *.lnk
-test.py

@@ -5,9 +5,12 @@ class Logger:
     """
     Classe pour enregistrer des messages dans un fichier journal.
     """
-    def __init__(self, file: str = 'gaza.log'):
+    def __init__(self, file: str = 'gaza'):
         self.file = file
         self.num_log = 0
+        # create the file log
+        if not os.path.exists(file):
+            with open(file, 'w') as file:file.write(f'(-) : {datetime.now()} : INITIALIZE LOGGER AND CREATE FILE LOG\n')
 
     def log(self, msg_type: str | list[str], msg_content: str, content_size_limit: int = 150) -> None:
         """
@@ -29,11 +32,11 @@ class Logger:
         """
         self.num_log += 1
         try:
-            if isinstance(msg_type, list): msg_type = ' | '.join(msg_type)
-            with open(f'{self.file}.log', 'a', encoding="UTF8") as file:
+            if isinstance(msg_type, (list, tuple)): msg_type = ' | '.join(msg_type)
+            with open(self.file, 'a', encoding="UTF8") as file:
                 file.write(f'({self.num_log}) : {datetime.now()} : {msg_type} : {msg_content[:content_size_limit]}\n')
         except Exception as e:
-            with open(f'{self.file}.log', 'a', encoding="UTF8") as file:
+            with open(self.file, 'a', encoding="UTF8") as file:
                 file.write(f'({self.num_log}) : {datetime.now()} : LOG_ERROR : {e}\n')
 
     def clear_logs(self, archive: bool = True, saving_folder: str = None) -> bool:
@@ -52,15 +55,15 @@ class Logger:
         - bool : True si le fichier log a été effacé et éventuellement archivé avec succès, False sinon.
 
         """
-        if not self.file.endswith('.log'):
-            self.file += '.log'
+        # if not self.file.endswith('.log'):
+        #     self.file += '.log'
 
         try:
             if os.path.isfile(self.file):
                 with open(self.file, 'r+') as log_file:
                     logs = log_file.read()
                     if archive:
-                        archive_filename = f"{logs[6:16]}_{logs[17:25].replace(':', '')]}.log"
+                        archive_filename = f"{logs[6:16]}_{logs[17:25].replace(':', '')}.log"
                         archive_path = os.path.join(saving_folder if saving_folder is not None and os.path.isdir(saving_folder) else os.path.dirname(self.file), archive_filename)
                         with open(archive_path, 'w') as archived_logs:
                             archived_logs.write(logs)
@@ -87,7 +90,7 @@ class Logger:
             None
         """
         try:
-            with open(f'{self.file}.log', 'r', encoding="UTF8") as file:
+            with open(self.file, 'r', encoding="UTF8") as file:
                 lines = file.readlines()[-num_lines:]
                 for line in lines:
                     print(line.strip())

@@ -2,21 +2,22 @@ from .logger import Logger
 
 class LogManager:
     def __init__(self, *args, **kwargs) -> None:
+        for logger in args + tuple(kwargs.values()):
+            if not isinstance(logger, Logger):
+                raise TypeError(f"All arguments must be of type 'Logger', not '{type(logger).__name__}'")
         # Store loggers in a dictionary by uppercased names
-        self.loggers = {**kwargs, **{logger.file.split('.', 1)[0].upper(): logger for logger in args if isinstance(logger, Logger)}}
+        self.loggers = {**kwargs, **{logger.file.split('.', 1)[0].upper(): logger for logger in args}}
 
     def __getattr__(self, name: str) -> Logger:
         # Access the logger by its name
-        logger_name = name.upper()
-        if logger_name in self.loggers:
-            return self.loggers[logger_name]
+        if name in self.loggers:
+            return self.loggers[name]
         raise AttributeError(f"'LogManager' object has no attribute '{name}'")
 
     def __getitem__(self, name: str) -> Logger:
         # Access the logger by its name using subscript notation
-        logger_name = name.upper()
-        if logger_name in self.loggers:
-            return self.loggers[logger_name]
+        if name in self.loggers:
+            return self.loggers[name]
         raise KeyError(f"'LogManager' object has no logger '{name}'")
 
     def add_logger(self, name: str, file: str = 'gaza.log') -> None:
@@ -50,7 +51,7 @@ class LogManager:
         if name in self.loggers:
             self.loggers[name].log(msg_type, msg_content, content_size_limit)
         else:
-            print(f"Le logger '{name}' n'existe pas.")
+            raise ValueError(f"Le logger '{name}' n'existe pas.")
 
     def clear_logs(self, name: str, archive: bool = True, saving_folder: str = None) -> bool:
         """
@@ -88,4 +89,4 @@ class LogManager:
         if name in self.loggers:
             self.loggers[name].print_logs(limit)
         else:
-            print(f"Le logger '{name}' n'existe pas.")
+            raise ValueError(f"Le logger '{name}' n'existe pas.")

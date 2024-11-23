@@ -1,7 +1,7 @@
 #=============================== IMPORTS ZONE ===============================
 
 #=============================== INIT ZONE ===============================
-__version__ = "3.4.5"
+__version__ = "3.4.6"
 __authors__ = ["CUISSET Mattéo"]
 __license__ = "MIT"
 __copyright__ = "Copyright 2022, CUISSET Mattéo"

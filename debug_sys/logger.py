@@ -5,7 +5,8 @@ class Logger:
     """
     Classe pour enregistrer des messages dans un fichier journal.
     """
-    def __init__(self, file: str = 'gaza'):
+    def __init__(self, file: str = 'gaza.log'):
+        if not self.file.endswith('.log'): self.file += '.log'
         self.file = file
         self.num_log = 0
         # create the file log
@@ -55,8 +56,6 @@ class Logger:
         - bool : True si le fichier log a été effacé et éventuellement archivé avec succès, False sinon.
 
         """
-        # if not self.file.endswith('.log'):
-        #     self.file += '.log'
 
         try:
             if os.path.isfile(self.file):

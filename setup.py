@@ -12,7 +12,7 @@ setup(
     url='https://github.com/Flyns157/debug_sys',
     classifiers=[
         'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: Apache License 2.0',
+        'License :: OSI Approved :: Apache-2.0',
         'Operating System :: OS Independent',
     ],
     python_requires='>=3.12',
